@@ -1,6 +1,6 @@
 # Me Toca — Dirección visual
 
-> **Documento histórico.** Su contenido ya está integrado en `../plan-calculadoras-laborales-mx.md` (secciones 10 y 11).
+> **Documento histórico.** Su contenido ya está integrado en `../../plan-calculadoras-laborales-mx.md` (secciones 10 y 11).
 > Si hay conflicto, manda el plan único. No editar este archivo.
 
 ## 1. Personalidad

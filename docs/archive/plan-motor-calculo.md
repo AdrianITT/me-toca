@@ -1,6 +1,6 @@
 # Me Toca — Plan del motor de cálculo
 
-> **Documento histórico.** Su contenido ya está integrado en `../plan-calculadoras-laborales-mx.md` (secciones 8 y 9).
+> **Documento histórico.** Su contenido ya está integrado en `../../plan-calculadoras-laborales-mx.md` (secciones 8 y 9).
 > Si hay conflicto, manda el plan único. No editar este archivo.
 
 ## 1. Alcance
