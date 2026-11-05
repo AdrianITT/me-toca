@@ -39,6 +39,7 @@ class ResultScreen extends ConsumerWidget {
               message:
                   'Captura tus datos en una calculadora para ver el resultado.',
               icon: Icons.receipt_long_rounded,
+              illustration: 'assets/illustrations/empty_result.png',
               actionLabel: 'Ver calculadoras',
               onAction: () => context.go('/'),
             )

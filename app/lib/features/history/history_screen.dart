@@ -35,6 +35,7 @@ class HistoryScreen extends StatelessWidget {
               title: 'Todavía no hay cálculos',
               message: 'Tus últimos cálculos quedan guardados aquí.',
               icon: Icons.history_rounded,
+              illustration: 'assets/illustrations/empty_history.png',
               actionLabel: 'Calcular',
               onAction: () => context.go('/'),
             )

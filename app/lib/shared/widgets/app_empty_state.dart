@@ -11,6 +11,7 @@ class AppEmptyState extends StatelessWidget {
     required this.title,
     required this.message,
     this.icon = Icons.receipt_long_rounded,
+    this.illustration,
     this.actionLabel,
     this.onAction,
   });
@@ -18,6 +19,7 @@ class AppEmptyState extends StatelessWidget {
   final String title;
   final String message;
   final IconData icon;
+  final String? illustration;
   final String? actionLabel;
   final VoidCallback? onAction;
 
@@ -31,15 +33,23 @@ class AppEmptyState extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Container(
-              width: 64,
-              height: 64,
-              decoration: BoxDecoration(
-                color: palette.primarySoft,
-                borderRadius: AppRadii.lgAll,
+            if (illustration != null)
+              Image.asset(
+                illustration!,
+                width: 160,
+                height: 160,
+                fit: BoxFit.contain,
+              )
+            else
+              Container(
+                width: 64,
+                height: 64,
+                decoration: BoxDecoration(
+                  color: palette.primarySoft,
+                  borderRadius: AppRadii.lgAll,
+                ),
+                child: Icon(icon, color: palette.primary, size: 30),
               ),
-              child: Icon(icon, color: palette.primary, size: 30),
-            ),
             const SizedBox(height: AppSpacing.xxl),
             Text(
               title,

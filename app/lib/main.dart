@@ -4,6 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 import 'app/router.dart';
+import 'app/theme/app_colors.dart';
+import 'app/theme/app_spacing.dart';
+import 'app/theme/app_typography.dart';
 import 'app/theme/theme.dart';
 import 'core/storage/app_settings.dart';
 import 'core/storage/storage_providers.dart';
@@ -13,6 +16,7 @@ import 'features/settings/settings_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  runApp(const _SplashScreen());
   await initializeDateFormatting('es_MX');
   final storageService = await StorageService.create();
   runApp(
@@ -118,6 +122,56 @@ class _MeTocaAppState extends ConsumerState<MeTocaApp> {
         }
         return OnboardingScreen(onDone: _markOnboardingSeen);
       },
+    );
+  }
+}
+
+
+class _SplashScreen extends StatelessWidget {
+  const _SplashScreen();
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        backgroundColor: AppColors.lightCanvas,
+        body: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 96,
+                height: 96,
+                decoration: BoxDecoration(
+                  color: AppColors.lightPrimarySoft,
+                  borderRadius: BorderRadius.circular(32),
+                ),
+                child: const Icon(
+                  Icons.card_giftcard_rounded,
+                  size: 44,
+                  color: AppColors.lightPrimary,
+                ),
+              ),
+              const SizedBox(height: AppSpacing.xxl),
+              Text(
+                'ME TOCA',
+                style: AppTypography.textTheme.labelMedium?.copyWith(
+                  color: AppColors.lightPrimary,
+                  letterSpacing: 2.4,
+                ),
+              ),
+              const SizedBox(height: AppSpacing.sm),
+              Text(
+                'Lo que te toca, claro y sin jerga',
+                style: AppTypography.textTheme.bodyMedium?.copyWith(
+                  color: AppColors.lightInkMuted,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
