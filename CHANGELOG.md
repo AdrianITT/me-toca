@@ -8,8 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- GitHub Actions workflow for `flutter analyze` and `flutter test`.
-- MIT license for the code (fonts remain under SIL OFL 1.1).
+- Reopen a calculation from history: tapping a row pre-fills the calculator
+  with the saved inputs and lets the user recalculate.
+- History entries now store serialized inputs (backward compatible with
+  older records).
+- Haptic feedback on secondary actions (copy, share, delete).
+- Salary zone setting (general/border) is now applied to the finiquito
+  seniority premium.
 
 ## [0.1.0] - 2026-11-05
 
