@@ -34,7 +34,16 @@ packages/calc_engine Dart puro, sin dependencias de Flutter
 docs/archive/        Borradores ya absorbidos por el plan
 ```
 
-## Reglas que no se rompen
+## Capturas
+
+Las capturas se agregarán cuando la app se pueda correr en un dispositivo.
+La dirección visual está documentada en la sección 11 del plan.
+
+## Licencia
+
+El código se distribuye bajo la licencia MIT (ver `LICENSE`).
+Las fuentes Fraunces y Manrope se distribuyen bajo la SIL Open Font License 1.1
+(ver `app/assets/licenses/`).
 
 - Dinero en centavos (`int`), nunca `double`.
 - Parámetros legales por fecha de vigencia, nunca por año del calendario.
