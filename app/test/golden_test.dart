@@ -1,3 +1,4 @@
+import 'package:calc_engine/calc_engine.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -5,16 +6,11 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:metoca/app/theme/theme.dart';
 import 'package:metoca/features/aguinaldo/aguinaldo_result_view.dart';
-import 'package:metoca/features/aguinaldo/aguinaldo_screen.dart'
-    show calculateAguinaldo, AguinaldoInput;
 import 'package:metoca/features/explanation/explanation_screen.dart';
 import 'package:metoca/features/result/calc_result_view.dart';
 import 'package:metoca/core/storage/storage_providers.dart';
 import 'package:metoca/features/result/result_provider.dart';
 import 'package:metoca/features/result/result_screen.dart';
-import 'package:metoca/shared/widgets/app_money_text.dart';
-
-import 'package:calc_engine/calc_engine.dart';
 
 final _parameters = ParameterRepository.forDate(DateTime.utc(2026, 6, 1))
     .valueOrNull!;
