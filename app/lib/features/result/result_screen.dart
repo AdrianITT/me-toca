@@ -96,6 +96,7 @@ class _ResultBody extends ConsumerWidget {
           alignment: Alignment.centerLeft,
           child: TextButton.icon(
             onPressed: () async {
+              HapticFeedback.lightImpact();
               await Clipboard.setData(
                 ClipboardData(text: formatMoney(result.amount)),
               );
@@ -151,7 +152,10 @@ class _ResultBody extends ConsumerWidget {
               child: AppButton(
                 label: 'Compartir',
                 variant: AppButtonVariant.secondary,
-                onPressed: () => _shareText(context, result),
+                onPressed: () {
+                  HapticFeedback.lightImpact();
+                  _shareText(context, result);
+                },
               ),
             ),
             const SizedBox(width: AppSpacing.md),
@@ -159,7 +163,10 @@ class _ResultBody extends ConsumerWidget {
               child: AppButton(
                 label: 'PDF',
                 variant: AppButtonVariant.secondary,
-                onPressed: () => _sharePdf(context, ref, result),
+                onPressed: () {
+                  HapticFeedback.lightImpact();
+                  _sharePdf(context, ref, result);
+                },
               ),
             ),
           ],

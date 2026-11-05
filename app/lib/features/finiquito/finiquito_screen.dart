@@ -8,6 +8,7 @@ import '../../app/theme/app_colors.dart';
 import '../../app/theme/app_spacing.dart';
 import '../../core/format/date_format.dart';
 import '../../core/format/money_format.dart';
+import '../../core/storage/app_settings.dart';
 import '../../core/storage/history_entry.dart';
 import '../../core/storage/storage_providers.dart';
 import '../../shared/widgets/app_button.dart';
@@ -172,6 +173,11 @@ class _FiniquitoScreenState extends ConsumerState<FiniquitoScreen> {
       separationType: _separationType,
       takenVacationDays: takenDays!,
       pendingSalaries: pendingSalaries!,
+      zone:
+          ref.read(storageControllerProvider).settings.zone ==
+              WageZoneChoice.border
+          ? WageZone.border
+          : WageZone.general,
     );
     final outcome = calculateFiniquito(input, parametersOutcome.valueOrNull!);
 

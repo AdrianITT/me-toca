@@ -45,8 +45,7 @@ class _AppMoneyTextState extends State<AppMoneyText>
     super.didChangeDependencies();
     if (widget.animate && !_started && _controller == null) {
       _started = true;
-      final disable =
-          MediaQuery.maybeOf(context)?.disableAnimations ?? false;
+      final disable = MediaQuery.maybeOf(context)?.disableAnimations ?? false;
       if (disable) {
         _displayCents = widget.money.cents;
       } else {
@@ -94,18 +93,16 @@ class _AppMoneyTextState extends State<AppMoneyText>
     final textTheme = Theme.of(context).textTheme;
     final isHero = widget.size == AppMoneySize.hero;
 
-    final numberStyle = (isHero
-            ? textTheme.displayMedium!
-            : textTheme.bodyLarge!)
-        .copyWith(
-      color: widget.color ?? palette.ink,
-      fontFeatures: const [FontFeature.tabularFigures()],
-    );
+    final numberStyle =
+        (isHero ? textTheme.displayMedium! : textTheme.bodyLarge!).copyWith(
+          color: widget.color ?? palette.ink,
+          fontFeatures: const [FontFeature.tabularFigures()],
+        );
     final symbolStyle = (isHero ? textTheme.titleLarge! : textTheme.bodySmall!)
         .copyWith(
-      color: palette.inkMuted,
-      fontFeatures: const [FontFeature.tabularFigures()],
-    );
+          color: palette.inkMuted,
+          fontFeatures: const [FontFeature.tabularFigures()],
+        );
 
     final amount = formatMoney(Money(_displayCents)).replaceAll(',', ',\u200B');
 

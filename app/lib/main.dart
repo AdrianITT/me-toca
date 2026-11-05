@@ -126,7 +126,6 @@ class _MeTocaAppState extends ConsumerState<MeTocaApp> {
   }
 }
 
-
 class _SplashScreen extends StatelessWidget {
   const _SplashScreen();
 
@@ -137,8 +136,9 @@ class _SplashScreen extends StatelessWidget {
     final isDark = brightness == Brightness.dark;
 
     final canvas = isDark ? AppColors.darkCanvas : AppColors.lightCanvas;
-    final primarySoft =
-        isDark ? AppColors.darkPrimarySoft : AppColors.lightPrimarySoft;
+    final primarySoft = isDark
+        ? AppColors.darkPrimarySoft
+        : AppColors.lightPrimarySoft;
     final primary = isDark ? AppColors.darkPrimary : AppColors.lightPrimary;
     final inkMuted = isDark ? AppColors.darkInkMuted : AppColors.lightInkMuted;
 

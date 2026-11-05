@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../app/theme/app_colors.dart';
@@ -126,7 +127,10 @@ class _HistoryRow extends StatelessWidget {
     return Dismissible(
       key: ValueKey(entry.id),
       direction: DismissDirection.endToStart,
-      onDismissed: (_) => onDelete?.call(entry.id),
+      onDismissed: (_) {
+        HapticFeedback.mediumImpact();
+        onDelete?.call(entry.id);
+      },
       background: Container(
         alignment: Alignment.centerRight,
         padding: const EdgeInsets.only(right: AppSpacing.lg),
