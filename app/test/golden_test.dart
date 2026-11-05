@@ -1,8 +1,12 @@
+@Tags(['golden'])
+library;
+
 import 'package:calc_engine/calc_engine.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+
 
 import 'package:metoca/app/theme/theme.dart';
 import 'package:metoca/features/aguinaldo/aguinaldo_result_view.dart';
