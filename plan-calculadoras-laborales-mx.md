@@ -2,7 +2,7 @@
 
 > **Documento único de planeación.** Sirve para empezar a construir con cualquier IA o desarrollador.
 > **Fecha:** 4 de noviembre de 2026
-> **Estado:** Planeación cerrada. Sin código todavía.
+> **Estado:** Planeación cerrada. Motor y las cinco calculadoras implementados.
 > **Verificación legal:** cerrada el 4 de noviembre de 2026 contra DOF, SAT, INEGI y CONASAMI. Único punto no verificable (IVA 8% fronterizo) quedó **deshabilitado por diseño**, no como pendiente.
 
 ---
@@ -361,10 +361,12 @@ tasa efectiva = isr a retener / ingreso
 | $11,492.67 | $891.42 | $0.00 | **$891.42** |
 | $15,000.00 | $1,402.82 | $0.00 | **$1,402.82** |
 | $500,000.00 | $159,513.84 | $0.00 | **$159,513.84** |
-| $7,500.00 quincenal | $709.86 | $264.30 | **$445.56** |
+| $7,500.00 quincenal | $709.86 | $0.00 | **$709.86** |
 | $2,000.00 semanal | $134.96 | $123.34 | **$11.62** |
 
 > El salto de $355.77 a $891.42 al cruzar $11,492.66 es real: el subsidio desaparece por completo. La app debe explicarlo.
+>
+> **El tope también se prorratea**, con la misma base de 30.4 días que el subsidio: quincenal $5,670.72 y semanal $2,646.34. Un ingreso arriba del tope del periodo no lleva subsidio, aunque el ISR causado sea menor. Por eso $7,500.00 quincenales se quedan en $709.86: equivalen a $15,000.00 mensuales.
 
 ---
 
@@ -485,6 +487,7 @@ La misma tabla aplica de enero a diciembre de 2026. Las tablas de 7, 10 y 15 dí
 **Reglas**
 
 - Solo si el ingreso mensual gravable ≤ $11,492.66.
+- El tope se prorratea con la misma base de 30.4 días que el subsidio: quincenal $5,670.72 y semanal $2,646.34.
 - Se resta del ISR causado; si el subsidio es mayor, el ISR a retener es $0 (no hay devolución).
 - Para periodos menores a un mes se prorratea: `monto mensual / 30.4 × días del periodo`. Quincenal: $264.30 (feb–dic) o $264.58 (enero). Semanal: $123.34 o $123.47.
 - No se considera para primas de antigüedad, retiro, indemnizaciones ni pagos por separación.
@@ -682,7 +685,7 @@ Mensajes humanos:
 | Cliff | $11,492.67 | $891.42 |
 | Tramo 5 | $15,000.00 | $1,402.82 |
 | Último tramo | $500,000.00 | $159,513.84 |
-| Quincenal | $7,500.00 | $445.56 |
+| Quincenal | $7,500.00 | $709.86 |
 | Semanal | $2,000.00 | $11.62 |
 
 **IVA**

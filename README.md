@@ -3,7 +3,7 @@
 Calculadora laboral y fiscal para México. Aguinaldo, finiquito, vacaciones, ISR e IVA.
 Funciona sin internet y sin registro.
 
-**Estado:** planeación cerrada. Todavía no hay código.
+**Estado:** motor en verde (48 pruebas) y las cinco calculadoras con captura, resultado, explicación, historial, ajustes, glosario y onboarding. Faltan anuncios, Pro, PDF y compartir.
 
 ## Empezar aquí
 
@@ -13,10 +13,18 @@ Si algo no está en el plan, no se implementa sin actualizarlo primero.
 
 ## Orden de construcción
 
-1. `packages/calc_engine` — motor Dart puro, dinero en centavos, parámetros por fecha de vigencia. Verde en pruebas antes de tocar UI.
-2. `app` — tema, componentes base y pantallas.
+1. `packages/calc_engine` — motor Dart puro, dinero en centavos, parámetros por fecha de vigencia. **Hecho:** las cinco calculadoras y la matriz de pruebas de la sección 9.7 están en verde.
+2. `app` — tema, componentes base y pantallas. **Hecho:** tokens claro/oscuro, tipografía Fraunces + Manrope, componentes base y las cinco calculadoras (aguinaldo, finiquito, vacaciones, ISR e IVA) con una capa de resultado/explicación compartida.
 3. Historial, ajustes, glosario.
 4. Anuncios, compra Pro, PDF y compartir.
+
+## Correr
+
+```bash
+cd packages/calc_engine && dart test    # motor
+cd app && flutter test                  # UI y formato
+cd app && flutter run                   # requiere Android SDK
+```
 
 ## Estructura
 
