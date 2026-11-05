@@ -91,6 +91,19 @@ class _AguinaldoScreenState extends ConsumerState<AguinaldoScreen> {
     });
   }
 
+  void _fillExample() {
+    setState(() {
+      _salaryController.text = '15,000.00';
+      _hireDate = DateTime.utc(2020, 1, 1);
+      _calculationDate = DateTime.utc(2026, 12, 31);
+      _daysController.text = '15';
+      _salaryError = null;
+      _hireError = null;
+      _daysError = null;
+      _formError = null;
+    });
+  }
+
   void _calculate() {
     FocusScope.of(context).unfocus();
 
@@ -127,6 +140,7 @@ class _AguinaldoScreenState extends ConsumerState<AguinaldoScreen> {
       return;
     }
 
+    HapticFeedback.mediumImpact();
     final parametersOutcome = ParameterRepository.forDate(_calculationDate);
     if (parametersOutcome.isFailure) {
       setState(() => _formError = parametersOutcome.errorOrNull!.message);
@@ -191,6 +205,23 @@ class _AguinaldoScreenState extends ConsumerState<AguinaldoScreen> {
             style: textTheme.bodyMedium?.copyWith(color: palette.inkMuted),
           ),
           const SizedBox(height: AppSpacing.xxl),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: TextButton.icon(
+              onPressed: _fillExample,
+              icon: const Icon(Icons.play_arrow_rounded, size: 18),
+              label: const Text('Probar con ejemplo'),
+              style: TextButton.styleFrom(
+                foregroundColor: palette.inkMuted,
+                padding: EdgeInsets.zero,
+                minimumSize: const Size(
+                  AppSpacing.minTouchTarget,
+                  AppSpacing.minTouchTarget,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: AppSpacing.md),
           AppTextField(
             label: 'Salario mensual bruto',
             controller: _salaryController,

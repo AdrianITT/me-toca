@@ -38,6 +38,15 @@ class _IsrScreenState extends ConsumerState<IsrScreen> {
     super.dispose();
   }
 
+  void _fillExample() {
+    setState(() {
+      _incomeController.text = '15,000.00';
+      _period = PayPeriod.monthly;
+      _incomeError = null;
+      _formError = null;
+    });
+  }
+
   void _calculate() {
     FocusScope.of(context).unfocus();
 
@@ -58,6 +67,7 @@ class _IsrScreenState extends ConsumerState<IsrScreen> {
       return;
     }
 
+    HapticFeedback.mediumImpact();
     final today = dateOnly(DateTime.now());
     final parametersOutcome = ParameterRepository.forDate(today);
     if (parametersOutcome.isFailure) {
@@ -114,6 +124,23 @@ class _IsrScreenState extends ConsumerState<IsrScreen> {
             style: textTheme.bodyMedium?.copyWith(color: palette.inkMuted),
           ),
           const SizedBox(height: AppSpacing.xxl),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: TextButton.icon(
+              onPressed: _fillExample,
+              icon: const Icon(Icons.play_arrow_rounded, size: 18),
+              label: const Text('Probar con ejemplo'),
+              style: TextButton.styleFrom(
+                foregroundColor: palette.inkMuted,
+                padding: EdgeInsets.zero,
+                minimumSize: const Size(
+                  AppSpacing.minTouchTarget,
+                  AppSpacing.minTouchTarget,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: AppSpacing.md),
           AppTextField(
             label: 'Ingreso gravable del periodo',
             controller: _incomeController,

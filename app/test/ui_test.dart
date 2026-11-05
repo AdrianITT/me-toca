@@ -509,6 +509,7 @@ void main() {
   testWidgets('result shows the hero amount and the breakdown', (tester) async {
     final semantics = tester.ensureSemantics();
     try {
+      _useTallScreen(tester, height: 900);
       await tester.pumpWidget(_wrap(const ResultScreen()));
 
       expect(find.text('Te tocan'), findsOneWidget);

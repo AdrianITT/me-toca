@@ -96,6 +96,23 @@ class _FiniquitoScreenState extends ConsumerState<FiniquitoScreen> {
     });
   }
 
+  void _fillExample() {
+    setState(() {
+      _salaryController.text = '15,000.00';
+      _hireDate = DateTime.utc(2024, 3, 1);
+      _terminationDate = DateTime.utc(2026, 11, 30);
+      _separationType = SeparationType.resignation;
+      _takenDaysController.text = '0';
+      _pendingSalariesController.text = '2,300.00';
+      _advancedOpen = true;
+      _salaryError = null;
+      _hireError = null;
+      _takenDaysError = null;
+      _pendingSalariesError = null;
+      _formError = null;
+    });
+  }
+
   void _calculate() {
     FocusScope.of(context).unfocus();
 
@@ -141,6 +158,7 @@ class _FiniquitoScreenState extends ConsumerState<FiniquitoScreen> {
       return;
     }
 
+    HapticFeedback.mediumImpact();
     final parametersOutcome = ParameterRepository.forDate(_terminationDate);
     if (parametersOutcome.isFailure) {
       setState(() => _formError = parametersOutcome.errorOrNull!.message);
@@ -208,6 +226,23 @@ class _FiniquitoScreenState extends ConsumerState<FiniquitoScreen> {
             style: textTheme.bodyMedium?.copyWith(color: palette.inkMuted),
           ),
           const SizedBox(height: AppSpacing.xxl),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: TextButton.icon(
+              onPressed: _fillExample,
+              icon: const Icon(Icons.play_arrow_rounded, size: 18),
+              label: const Text('Probar con ejemplo'),
+              style: TextButton.styleFrom(
+                foregroundColor: palette.inkMuted,
+                padding: EdgeInsets.zero,
+                minimumSize: const Size(
+                  AppSpacing.minTouchTarget,
+                  AppSpacing.minTouchTarget,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: AppSpacing.md),
           AppTextField(
             label: 'Salario mensual bruto',
             controller: _salaryController,

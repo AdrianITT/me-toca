@@ -39,6 +39,16 @@ class _IvaScreenState extends ConsumerState<IvaScreen> {
     super.dispose();
   }
 
+  void _fillExample() {
+    setState(() {
+      _amountController.text = '1,000.00';
+      _mode = IvaMode.add;
+      _rate = IvaRate.general;
+      _amountError = null;
+      _formError = null;
+    });
+  }
+
   void _calculate() {
     FocusScope.of(context).unfocus();
 
@@ -59,6 +69,7 @@ class _IvaScreenState extends ConsumerState<IvaScreen> {
       return;
     }
 
+    HapticFeedback.mediumImpact();
     final outcome = calculateIva(
       IvaInput(amount: amount!, mode: _mode, rate: _rate),
     );
@@ -110,6 +121,23 @@ class _IvaScreenState extends ConsumerState<IvaScreen> {
             style: textTheme.bodyMedium?.copyWith(color: palette.inkMuted),
           ),
           const SizedBox(height: AppSpacing.xxl),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: TextButton.icon(
+              onPressed: _fillExample,
+              icon: const Icon(Icons.play_arrow_rounded, size: 18),
+              label: const Text('Probar con ejemplo'),
+              style: TextButton.styleFrom(
+                foregroundColor: palette.inkMuted,
+                padding: EdgeInsets.zero,
+                minimumSize: const Size(
+                  AppSpacing.minTouchTarget,
+                  AppSpacing.minTouchTarget,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: AppSpacing.md),
           AppTextField(
             label: 'Monto',
             controller: _amountController,

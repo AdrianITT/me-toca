@@ -88,6 +88,19 @@ class _VacacionesScreenState extends ConsumerState<VacacionesScreen> {
     });
   }
 
+  void _fillExample() {
+    setState(() {
+      _salaryController.text = '15,000.00';
+      _hireDate = DateTime.utc(2025, 1, 1);
+      _cutoffDate = DateTime.utc(2026, 11, 30);
+      _takenDaysController.text = '0';
+      _salaryError = null;
+      _hireError = null;
+      _takenDaysError = null;
+      _formError = null;
+    });
+  }
+
   void _calculate() {
     FocusScope.of(context).unfocus();
 
@@ -119,6 +132,7 @@ class _VacacionesScreenState extends ConsumerState<VacacionesScreen> {
       return;
     }
 
+    HapticFeedback.mediumImpact();
     final parametersOutcome = ParameterRepository.forDate(_cutoffDate);
     if (parametersOutcome.isFailure) {
       setState(() => _formError = parametersOutcome.errorOrNull!.message);
@@ -183,6 +197,23 @@ class _VacacionesScreenState extends ConsumerState<VacacionesScreen> {
             style: textTheme.bodyMedium?.copyWith(color: palette.inkMuted),
           ),
           const SizedBox(height: AppSpacing.xxl),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: TextButton.icon(
+              onPressed: _fillExample,
+              icon: const Icon(Icons.play_arrow_rounded, size: 18),
+              label: const Text('Probar con ejemplo'),
+              style: TextButton.styleFrom(
+                foregroundColor: palette.inkMuted,
+                padding: EdgeInsets.zero,
+                minimumSize: const Size(
+                  AppSpacing.minTouchTarget,
+                  AppSpacing.minTouchTarget,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: AppSpacing.md),
           AppTextField(
             label: 'Salario mensual bruto',
             controller: _salaryController,
