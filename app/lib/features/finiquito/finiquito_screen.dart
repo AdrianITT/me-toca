@@ -262,157 +262,161 @@ class _FiniquitoScreenState extends ConsumerState<FiniquitoScreen> {
       appBar: AppBar(title: const Text('Finiquito')),
       body: FocusTraversalGroup(
         child: ListView(
-        padding: AppSpacing.screen.copyWith(
-          top: AppSpacing.sm,
-          bottom: AppSpacing.xxl,
-        ),
-        children: [
-          Text(
-            'Datos de tu finiquito',
-            style: textTheme.headlineMedium?.copyWith(color: palette.ink),
+          padding: AppSpacing.screen.copyWith(
+            top: AppSpacing.sm,
+            bottom: AppSpacing.xxl,
           ),
-          const SizedBox(height: AppSpacing.sm),
-          Text(
-            'Incluye lo que te deben al terminar la relación laboral.',
-            style: textTheme.bodyMedium?.copyWith(color: palette.inkMuted),
-          ),
-          const SizedBox(height: AppSpacing.xxl),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: TextButton.icon(
-              onPressed: _fillExample,
-              icon: const Icon(Icons.play_arrow_rounded, size: 18),
-              label: const Text('Probar con ejemplo'),
-              style: TextButton.styleFrom(
-                foregroundColor: palette.inkMuted,
-                padding: EdgeInsets.zero,
-                minimumSize: const Size(
-                  AppSpacing.minTouchTarget,
-                  AppSpacing.minTouchTarget,
-                ),
-              ),
+          children: [
+            Text(
+              'Datos de tu finiquito',
+              style: textTheme.headlineMedium?.copyWith(color: palette.ink),
             ),
-          ),
-          const SizedBox(height: AppSpacing.md),
-          AppTextField(
-            label: 'Salario mensual bruto',
-            controller: _salaryController,
-            focusNode: _salaryFocus,
-            hint: '15,000.00',
-            suffix: 'MXN',
-            helper: 'Antes de impuestos.',
-            errorText: _salaryError,
-            keyboardType: const TextInputType.numberWithOptions(decimal: true),
-            inputFormatters: [
-              FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]')),
-            ],
-            textInputAction: TextInputAction.next,
-            onChanged: (_) {
-              if (_salaryError != null) {
-                setState(() => _salaryError = null);
-              }
-            },
-          ),
-          const SizedBox(height: AppSpacing.xl),
-          AppDateField(
-            label: 'Fecha de ingreso',
-            value: _hireDate,
-            onTap: _pickHireDate,
-            helper: 'El día que empezaste a trabajar.',
-            errorText: _hireError,
-          ),
-          const SizedBox(height: AppSpacing.xl),
-          AppDateField(
-            label: 'Fecha de baja',
-            value: _terminationDate,
-            onTap: _pickTerminationDate,
-            helper: 'El último día que trabajaste.',
-          ),
-          const SizedBox(height: AppSpacing.xl),
-          AppChoiceField<SeparationType>(
-            label: 'Tipo de salida',
-            value: _separationType,
-            options: [
-              for (final type in SeparationType.values)
-                AppChoiceOption(value: type, label: _capitalize(type.label)),
-            ],
-            helper: 'Solo el despido injustificado genera indemnización.',
-            onChanged: (value) {
-              setState(() {
-                _separationType = value;
-                _formError = null;
-              });
-            },
-          ),
-          const SizedBox(height: AppSpacing.xl),
-          AppTextField(
-            label: 'Días de vacaciones tomados',
-            controller: _takenDaysController,
-            suffix: 'días',
-            helper: 'Deja 0 si no has tomado vacaciones.',
-            errorText: _takenDaysError,
-            keyboardType: TextInputType.number,
-            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-            onChanged: (_) {
-              if (_takenDaysError != null) {
-                setState(() => _takenDaysError = null);
-              }
-            },
-          ),
-          const SizedBox(height: AppSpacing.lg),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: TextButton.icon(
-              onPressed: () {
-                setState(() => _advancedOpen = !_advancedOpen);
-              },
-              icon: Icon(
-                _advancedOpen ? Icons.expand_less_rounded : Icons.tune_rounded,
-                size: 18,
-              ),
-              label: Text(
-                _advancedOpen
-                    ? 'Ocultar opciones avanzadas'
-                    : 'Opciones avanzadas',
-              ),
-              style: TextButton.styleFrom(
-                foregroundColor: palette.inkMuted,
-                minimumSize: const Size(
-                  AppSpacing.minTouchTarget,
-                  AppSpacing.minTouchTarget,
-                ),
-                padding: EdgeInsets.zero,
-                textStyle: textTheme.labelLarge,
-              ),
-            ),
-          ),
-          if (_advancedOpen) ...[
             const SizedBox(height: AppSpacing.sm),
+            Text(
+              'Incluye lo que te deben al terminar la relación laboral.',
+              style: textTheme.bodyMedium?.copyWith(color: palette.inkMuted),
+            ),
+            const SizedBox(height: AppSpacing.xxl),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: TextButton.icon(
+                onPressed: _fillExample,
+                icon: const Icon(Icons.play_arrow_rounded, size: 18),
+                label: const Text('Probar con ejemplo'),
+                style: TextButton.styleFrom(
+                  foregroundColor: palette.inkMuted,
+                  padding: EdgeInsets.zero,
+                  minimumSize: const Size(
+                    AppSpacing.minTouchTarget,
+                    AppSpacing.minTouchTarget,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: AppSpacing.md),
             AppTextField(
-              label: 'Salarios pendientes',
-              controller: _pendingSalariesController,
+              label: 'Salario mensual bruto',
+              controller: _salaryController,
+              focusNode: _salaryFocus,
+              hint: '15,000.00',
               suffix: 'MXN',
-              hint: '0.00',
-              helper: 'Los días que ya trabajaste y aún no te pagan.',
-              errorText: _pendingSalariesError,
+              helper: 'Antes de impuestos.',
+              errorText: _salaryError,
               keyboardType: const TextInputType.numberWithOptions(
                 decimal: true,
               ),
               inputFormatters: [
                 FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]')),
               ],
+              textInputAction: TextInputAction.next,
               onChanged: (_) {
-                if (_pendingSalariesError != null) {
-                  setState(() => _pendingSalariesError = null);
+                if (_salaryError != null) {
+                  setState(() => _salaryError = null);
                 }
               },
             ),
-          ],
-          if (_formError != null) ...[
             const SizedBox(height: AppSpacing.xl),
-            AppFormError(_formError!),
+            AppDateField(
+              label: 'Fecha de ingreso',
+              value: _hireDate,
+              onTap: _pickHireDate,
+              helper: 'El día que empezaste a trabajar.',
+              errorText: _hireError,
+            ),
+            const SizedBox(height: AppSpacing.xl),
+            AppDateField(
+              label: 'Fecha de baja',
+              value: _terminationDate,
+              onTap: _pickTerminationDate,
+              helper: 'El último día que trabajaste.',
+            ),
+            const SizedBox(height: AppSpacing.xl),
+            AppChoiceField<SeparationType>(
+              label: 'Tipo de salida',
+              value: _separationType,
+              options: [
+                for (final type in SeparationType.values)
+                  AppChoiceOption(value: type, label: _capitalize(type.label)),
+              ],
+              helper: 'Solo el despido injustificado genera indemnización.',
+              onChanged: (value) {
+                setState(() {
+                  _separationType = value;
+                  _formError = null;
+                });
+              },
+            ),
+            const SizedBox(height: AppSpacing.xl),
+            AppTextField(
+              label: 'Días de vacaciones tomados',
+              controller: _takenDaysController,
+              suffix: 'días',
+              helper: 'Deja 0 si no has tomado vacaciones.',
+              errorText: _takenDaysError,
+              keyboardType: TextInputType.number,
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              onChanged: (_) {
+                if (_takenDaysError != null) {
+                  setState(() => _takenDaysError = null);
+                }
+              },
+            ),
+            const SizedBox(height: AppSpacing.lg),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: TextButton.icon(
+                onPressed: () {
+                  setState(() => _advancedOpen = !_advancedOpen);
+                },
+                icon: Icon(
+                  _advancedOpen
+                      ? Icons.expand_less_rounded
+                      : Icons.tune_rounded,
+                  size: 18,
+                ),
+                label: Text(
+                  _advancedOpen
+                      ? 'Ocultar opciones avanzadas'
+                      : 'Opciones avanzadas',
+                ),
+                style: TextButton.styleFrom(
+                  foregroundColor: palette.inkMuted,
+                  minimumSize: const Size(
+                    AppSpacing.minTouchTarget,
+                    AppSpacing.minTouchTarget,
+                  ),
+                  padding: EdgeInsets.zero,
+                  textStyle: textTheme.labelLarge,
+                ),
+              ),
+            ),
+            if (_advancedOpen) ...[
+              const SizedBox(height: AppSpacing.sm),
+              AppTextField(
+                label: 'Salarios pendientes',
+                controller: _pendingSalariesController,
+                suffix: 'MXN',
+                hint: '0.00',
+                helper: 'Los días que ya trabajaste y aún no te pagan.',
+                errorText: _pendingSalariesError,
+                keyboardType: const TextInputType.numberWithOptions(
+                  decimal: true,
+                ),
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]')),
+                ],
+                onChanged: (_) {
+                  if (_pendingSalariesError != null) {
+                    setState(() => _pendingSalariesError = null);
+                  }
+                },
+              ),
+            ],
+            if (_formError != null) ...[
+              const SizedBox(height: AppSpacing.xl),
+              AppFormError(_formError!),
+            ],
           ],
-        ],
         ),
       ),
       bottomNavigationBar: SafeArea(

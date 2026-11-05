@@ -120,11 +120,7 @@ String _monthLabel(DateTime month) {
 }
 
 class _HistoryRow extends StatelessWidget {
-  const _HistoryRow({
-    required this.entry,
-    this.onDelete,
-    this.onOpen,
-  });
+  const _HistoryRow({required this.entry, this.onDelete, this.onOpen});
 
   final HistoryEntry entry;
   final ValueChanged<String>? onDelete;

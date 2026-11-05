@@ -43,9 +43,7 @@ Widget _wrap(Widget child, {ThemeData? theme}) {
   return ProviderScope(
     overrides: [
       storageServiceProvider.overrideWithValue(StorageService.forTesting()),
-      calcResultProvider.overrideWith(
-        () => _FakeResultController(_sampleView),
-      ),
+      calcResultProvider.overrideWith(() => _FakeResultController(_sampleView)),
     ],
     child: MaterialApp(
       theme: theme ?? AppTheme.light(),

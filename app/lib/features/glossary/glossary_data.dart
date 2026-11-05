@@ -94,6 +94,15 @@ const List<GlossaryTerm> glossaryTerms = [
     example: 'Con 2 años, tu liquidación sería de 130 días de salario.',
   ),
   GlossaryTerm(
+    term: 'Ingreso gravable',
+    definition:
+        'El ingreso sobre el que se calcula el ISR, antes de impuestos. '
+        'Es el sueldo bruto más otras percepciones gravables.',
+    example:
+        'Si tu recibo dice "ingreso gravable: \$15,000.00", ese es el monto '
+        'que capturas en la calculadora de ISR.',
+  ),
+  GlossaryTerm(
     term: 'ISR',
     definition:
         'Impuesto sobre la renta: el impuesto que se retiene de tu ingreso '

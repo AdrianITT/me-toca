@@ -12,6 +12,7 @@ import '../../core/storage/storage_providers.dart';
 import '../../shared/widgets/app_button.dart';
 import '../../shared/widgets/app_choice_field.dart';
 import '../../shared/widgets/app_form_error.dart';
+import '../../shared/widgets/app_notice.dart';
 import '../../shared/widgets/app_text_field.dart';
 import '../result/result_provider.dart';
 import 'isr_result_view.dart';
@@ -134,90 +135,117 @@ class _IsrScreenState extends ConsumerState<IsrScreen> {
       appBar: AppBar(title: const Text('ISR')),
       body: FocusTraversalGroup(
         child: ListView(
-        padding: AppSpacing.screen.copyWith(
-          top: AppSpacing.sm,
-          bottom: AppSpacing.xxl,
-        ),
-        children: [
-          Text(
-            'Datos de tu ISR',
-            style: textTheme.headlineMedium?.copyWith(color: palette.ink),
+          padding: AppSpacing.screen.copyWith(
+            top: AppSpacing.sm,
+            bottom: AppSpacing.xxl,
           ),
-          const SizedBox(height: AppSpacing.sm),
-          Text(
-            'Lo que te retienen de tu ingreso en el periodo.',
-            style: textTheme.bodyMedium?.copyWith(color: palette.inkMuted),
-          ),
-          const SizedBox(height: AppSpacing.xxl),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: TextButton.icon(
-              onPressed: _fillExample,
-              icon: const Icon(Icons.play_arrow_rounded, size: 18),
-              label: const Text('Probar con ejemplo'),
-              style: TextButton.styleFrom(
-                foregroundColor: palette.inkMuted,
-                padding: EdgeInsets.zero,
-                minimumSize: const Size(
-                  AppSpacing.minTouchTarget,
-                  AppSpacing.minTouchTarget,
+          children: [
+            Text(
+              'Datos de tu ISR',
+              style: textTheme.headlineMedium?.copyWith(color: palette.ink),
+            ),
+            const SizedBox(height: AppSpacing.sm),
+            Text(
+              'Lo que te retienen de tu ingreso en el periodo.',
+              style: textTheme.bodyMedium?.copyWith(color: palette.inkMuted),
+            ),
+            const SizedBox(height: AppSpacing.xxl),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: TextButton.icon(
+                onPressed: _fillExample,
+                icon: const Icon(Icons.play_arrow_rounded, size: 18),
+                label: const Text('Probar con ejemplo'),
+                style: TextButton.styleFrom(
+                  foregroundColor: palette.inkMuted,
+                  padding: EdgeInsets.zero,
+                  minimumSize: const Size(
+                    AppSpacing.minTouchTarget,
+                    AppSpacing.minTouchTarget,
+                  ),
                 ),
               ),
             ),
-          ),
-          const SizedBox(height: AppSpacing.md),
-          AppTextField(
-            label: 'Ingreso gravable del periodo',
-            controller: _incomeController,
-            focusNode: _incomeFocus,
-            hint: '15,000.00',
-            suffix: 'MXN',
-            helper: 'El ingreso antes de impuestos.',
-            errorText: _incomeError,
-            keyboardType: const TextInputType.numberWithOptions(decimal: true),
-            inputFormatters: [
-              FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]')),
-            ],
-            onChanged: (_) {
-              if (_incomeError != null) {
-                setState(() => _incomeError = null);
-              }
-            },
-          ),
-          const SizedBox(height: AppSpacing.xl),
-          AppChoiceField<PayPeriod>(
-            label: 'Periodo de pago',
-            value: _period,
-            options: const [
-              AppChoiceOption(
-                value: PayPeriod.monthly,
-                label: 'Mensual',
-                description: 'Tarifa de 30 días.',
+            const SizedBox(height: AppSpacing.md),
+            AppTextField(
+              label: 'Ingreso gravable del periodo',
+              controller: _incomeController,
+              focusNode: _incomeFocus,
+              hint: '15,000.00',
+              suffix: 'MXN',
+              helper:
+                  'El ingreso antes de impuestos. Lo encuentras en tu '
+                  'recibo de nómina como "ingreso gravable" o "sueldo bruto".',
+              errorText: _incomeError,
+              keyboardType: const TextInputType.numberWithOptions(
+                decimal: true,
               ),
-              AppChoiceOption(
-                value: PayPeriod.fifteenDay,
-                label: 'Quincenal',
-                description: 'Tarifa de 15 días.',
-              ),
-              AppChoiceOption(
-                value: PayPeriod.weekly,
-                label: 'Semanal',
-                description: 'Tarifa de 7 días.',
-              ),
-            ],
-            helper: 'Cada periodo usa su propia tarifa oficial.',
-            onChanged: (value) {
-              setState(() {
-                _period = value;
-                _formError = null;
-              });
-            },
-          ),
-          if (_formError != null) ...[
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]')),
+              ],
+              onChanged: (_) {
+                if (_incomeError != null) {
+                  setState(() => _incomeError = null);
+                }
+              },
+            ),
             const SizedBox(height: AppSpacing.xl),
-            AppFormError(_formError!),
+            AppChoiceField<PayPeriod>(
+              label: 'Periodo de pago',
+              value: _period,
+              options: const [
+                AppChoiceOption(
+                  value: PayPeriod.monthly,
+                  label: 'Mensual',
+                  description: 'Tarifa de 30 días.',
+                ),
+                AppChoiceOption(
+                  value: PayPeriod.fifteenDay,
+                  label: 'Quincenal',
+                  description: 'Tarifa de 15 días.',
+                ),
+                AppChoiceOption(
+                  value: PayPeriod.weekly,
+                  label: 'Semanal',
+                  description: 'Tarifa de 7 días.',
+                ),
+              ],
+              helper: 'Cada periodo usa su propia tarifa oficial.',
+              onChanged: (value) {
+                setState(() {
+                  _period = value;
+                  _formError = null;
+                });
+              },
+            ),
+            const SizedBox(height: AppSpacing.lg),
+            const AppNotice(
+              'Si solo sabes lo que te llega (neto), esta calculadora no lo '
+              'invierte. Pide tu recibo de nómina o usa el monto bruto de tu '
+              'contrato.',
+            ),
+            const SizedBox(height: AppSpacing.sm),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: TextButton.icon(
+                onPressed: () => context.push('/glosario'),
+                icon: const Icon(Icons.menu_book_rounded, size: 16),
+                label: const Text('Ver glosario'),
+                style: TextButton.styleFrom(
+                  foregroundColor: palette.inkMuted,
+                  padding: EdgeInsets.zero,
+                  minimumSize: const Size(
+                    AppSpacing.minTouchTarget,
+                    AppSpacing.minTouchTarget,
+                  ),
+                ),
+              ),
+            ),
+            if (_formError != null) ...[
+              const SizedBox(height: AppSpacing.xl),
+              AppFormError(_formError!),
+            ],
           ],
-        ],
         ),
       ),
       bottomNavigationBar: SafeArea(

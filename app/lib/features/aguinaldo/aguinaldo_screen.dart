@@ -219,121 +219,125 @@ class _AguinaldoScreenState extends ConsumerState<AguinaldoScreen> {
       appBar: AppBar(title: const Text('Aguinaldo')),
       body: FocusTraversalGroup(
         child: ListView(
-        padding: AppSpacing.screen.copyWith(
-          top: AppSpacing.sm,
-          bottom: AppSpacing.xxl,
-        ),
-        children: [
-          Text(
-            'Datos de tu aguinaldo',
-            style: textTheme.headlineMedium?.copyWith(color: palette.ink),
+          padding: AppSpacing.screen.copyWith(
+            top: AppSpacing.sm,
+            bottom: AppSpacing.xxl,
           ),
-          const SizedBox(height: AppSpacing.sm),
-          Text(
-            'Máximo un minuto. Nada sale de tu teléfono.',
-            style: textTheme.bodyMedium?.copyWith(color: palette.inkMuted),
-          ),
-          const SizedBox(height: AppSpacing.xxl),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: TextButton.icon(
-              onPressed: _fillExample,
-              icon: const Icon(Icons.play_arrow_rounded, size: 18),
-              label: const Text('Probar con ejemplo'),
-              style: TextButton.styleFrom(
-                foregroundColor: palette.inkMuted,
-                padding: EdgeInsets.zero,
-                minimumSize: const Size(
-                  AppSpacing.minTouchTarget,
-                  AppSpacing.minTouchTarget,
-                ),
-              ),
+          children: [
+            Text(
+              'Datos de tu aguinaldo',
+              style: textTheme.headlineMedium?.copyWith(color: palette.ink),
             ),
-          ),
-          const SizedBox(height: AppSpacing.md),
-          AppTextField(
-            label: 'Salario mensual bruto',
-            controller: _salaryController,
-            focusNode: _salaryFocus,
-            hint: '15,000.00',
-            suffix: 'MXN',
-            helper: 'Antes de impuestos.',
-            errorText: _salaryError,
-            keyboardType: const TextInputType.numberWithOptions(decimal: true),
-            inputFormatters: [
-              FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]')),
-            ],
-            textInputAction: TextInputAction.next,
-            onChanged: (_) {
-              if (_salaryError != null) {
-                setState(() => _salaryError = null);
-              }
-            },
-          ),
-          const SizedBox(height: AppSpacing.xl),
-          AppDateField(
-            label: 'Fecha de ingreso',
-            value: _hireDate,
-            onTap: _pickHireDate,
-            helper: 'El día que empezaste a trabajar.',
-            errorText: _hireError,
-          ),
-          const SizedBox(height: AppSpacing.xl),
-          AppDateField(
-            label: 'Fecha de cálculo o salida',
-            value: _calculationDate,
-            onTap: _pickCalculationDate,
-            helper: 'Hoy o el día de tu salida.',
-          ),
-          const SizedBox(height: AppSpacing.lg),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: TextButton.icon(
-              onPressed: () {
-                setState(() => _advancedOpen = !_advancedOpen);
-              },
-              icon: Icon(
-                _advancedOpen ? Icons.expand_less_rounded : Icons.tune_rounded,
-                size: 18,
-              ),
-              label: Text(
-                _advancedOpen
-                    ? 'Ocultar opciones avanzadas'
-                    : 'Opciones avanzadas',
-              ),
-              style: TextButton.styleFrom(
-                foregroundColor: palette.inkMuted,
-                minimumSize: const Size(
-                  AppSpacing.minTouchTarget,
-                  AppSpacing.minTouchTarget,
-                ),
-                padding: EdgeInsets.zero,
-                textStyle: textTheme.labelLarge,
-              ),
-            ),
-          ),
-          if (_advancedOpen) ...[
             const SizedBox(height: AppSpacing.sm),
+            Text(
+              'Máximo un minuto. Nada sale de tu teléfono.',
+              style: textTheme.bodyMedium?.copyWith(color: palette.inkMuted),
+            ),
+            const SizedBox(height: AppSpacing.xxl),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: TextButton.icon(
+                onPressed: _fillExample,
+                icon: const Icon(Icons.play_arrow_rounded, size: 18),
+                label: const Text('Probar con ejemplo'),
+                style: TextButton.styleFrom(
+                  foregroundColor: palette.inkMuted,
+                  padding: EdgeInsets.zero,
+                  minimumSize: const Size(
+                    AppSpacing.minTouchTarget,
+                    AppSpacing.minTouchTarget,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: AppSpacing.md),
             AppTextField(
-              label: 'Días de aguinaldo de tu empresa',
-              controller: _daysController,
-              suffix: 'días',
-              helper: 'Mínimo legal: 15 días.',
-              errorText: _daysError,
-              keyboardType: TextInputType.number,
-              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              label: 'Salario mensual bruto',
+              controller: _salaryController,
+              focusNode: _salaryFocus,
+              hint: '15,000.00',
+              suffix: 'MXN',
+              helper: 'Antes de impuestos.',
+              errorText: _salaryError,
+              keyboardType: const TextInputType.numberWithOptions(
+                decimal: true,
+              ),
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]')),
+              ],
+              textInputAction: TextInputAction.next,
               onChanged: (_) {
-                if (_daysError != null) {
-                  setState(() => _daysError = null);
+                if (_salaryError != null) {
+                  setState(() => _salaryError = null);
                 }
               },
             ),
-          ],
-          if (_formError != null) ...[
             const SizedBox(height: AppSpacing.xl),
-            AppFormError(_formError!),
+            AppDateField(
+              label: 'Fecha de ingreso',
+              value: _hireDate,
+              onTap: _pickHireDate,
+              helper: 'El día que empezaste a trabajar.',
+              errorText: _hireError,
+            ),
+            const SizedBox(height: AppSpacing.xl),
+            AppDateField(
+              label: 'Fecha de cálculo o salida',
+              value: _calculationDate,
+              onTap: _pickCalculationDate,
+              helper: 'Hoy o el día de tu salida.',
+            ),
+            const SizedBox(height: AppSpacing.lg),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: TextButton.icon(
+                onPressed: () {
+                  setState(() => _advancedOpen = !_advancedOpen);
+                },
+                icon: Icon(
+                  _advancedOpen
+                      ? Icons.expand_less_rounded
+                      : Icons.tune_rounded,
+                  size: 18,
+                ),
+                label: Text(
+                  _advancedOpen
+                      ? 'Ocultar opciones avanzadas'
+                      : 'Opciones avanzadas',
+                ),
+                style: TextButton.styleFrom(
+                  foregroundColor: palette.inkMuted,
+                  minimumSize: const Size(
+                    AppSpacing.minTouchTarget,
+                    AppSpacing.minTouchTarget,
+                  ),
+                  padding: EdgeInsets.zero,
+                  textStyle: textTheme.labelLarge,
+                ),
+              ),
+            ),
+            if (_advancedOpen) ...[
+              const SizedBox(height: AppSpacing.sm),
+              AppTextField(
+                label: 'Días de aguinaldo de tu empresa',
+                controller: _daysController,
+                suffix: 'días',
+                helper: 'Mínimo legal: 15 días.',
+                errorText: _daysError,
+                keyboardType: TextInputType.number,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                onChanged: (_) {
+                  if (_daysError != null) {
+                    setState(() => _daysError = null);
+                  }
+                },
+              ),
+            ],
+            if (_formError != null) ...[
+              const SizedBox(height: AppSpacing.xl),
+              AppFormError(_formError!),
+            ],
           ],
-        ],
         ),
       ),
       bottomNavigationBar: SafeArea(

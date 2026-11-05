@@ -144,114 +144,116 @@ class _IvaScreenState extends ConsumerState<IvaScreen> {
       appBar: AppBar(title: const Text('IVA')),
       body: FocusTraversalGroup(
         child: ListView(
-        padding: AppSpacing.screen.copyWith(
-          top: AppSpacing.sm,
-          bottom: AppSpacing.xxl,
-        ),
-        children: [
-          Text(
-            'Datos de tu IVA',
-            style: textTheme.headlineMedium?.copyWith(color: palette.ink),
+          padding: AppSpacing.screen.copyWith(
+            top: AppSpacing.sm,
+            bottom: AppSpacing.xxl,
           ),
-          const SizedBox(height: AppSpacing.sm),
-          Text(
-            'Agrega el IVA a un monto o desglósalo de un total.',
-            style: textTheme.bodyMedium?.copyWith(color: palette.inkMuted),
-          ),
-          const SizedBox(height: AppSpacing.xxl),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: TextButton.icon(
-              onPressed: _fillExample,
-              icon: const Icon(Icons.play_arrow_rounded, size: 18),
-              label: const Text('Probar con ejemplo'),
-              style: TextButton.styleFrom(
-                foregroundColor: palette.inkMuted,
-                padding: EdgeInsets.zero,
-                minimumSize: const Size(
-                  AppSpacing.minTouchTarget,
-                  AppSpacing.minTouchTarget,
+          children: [
+            Text(
+              'Datos de tu IVA',
+              style: textTheme.headlineMedium?.copyWith(color: palette.ink),
+            ),
+            const SizedBox(height: AppSpacing.sm),
+            Text(
+              'Agrega el IVA a un monto o desglósalo de un total.',
+              style: textTheme.bodyMedium?.copyWith(color: palette.inkMuted),
+            ),
+            const SizedBox(height: AppSpacing.xxl),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: TextButton.icon(
+                onPressed: _fillExample,
+                icon: const Icon(Icons.play_arrow_rounded, size: 18),
+                label: const Text('Probar con ejemplo'),
+                style: TextButton.styleFrom(
+                  foregroundColor: palette.inkMuted,
+                  padding: EdgeInsets.zero,
+                  minimumSize: const Size(
+                    AppSpacing.minTouchTarget,
+                    AppSpacing.minTouchTarget,
+                  ),
                 ),
               ),
             ),
-          ),
-          const SizedBox(height: AppSpacing.md),
-          AppTextField(
-            label: 'Monto',
-            controller: _amountController,
-            focusNode: _amountFocus,
-            hint: '1,000.00',
-            suffix: 'MXN',
-            helper: 'El monto base o el total, según el modo.',
-            errorText: _amountError,
-            keyboardType: const TextInputType.numberWithOptions(decimal: true),
-            inputFormatters: [
-              FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]')),
-            ],
-            onChanged: (_) {
-              if (_amountError != null) {
-                setState(() => _amountError = null);
-              }
-            },
-          ),
-          const SizedBox(height: AppSpacing.xl),
-          AppChoiceField<IvaMode>(
-            label: 'Modo',
-            value: _mode,
-            options: const [
-              AppChoiceOption(
-                value: IvaMode.add,
-                label: 'Agregar IVA',
-                description: 'Suma el IVA al monto.',
+            const SizedBox(height: AppSpacing.md),
+            AppTextField(
+              label: 'Monto',
+              controller: _amountController,
+              focusNode: _amountFocus,
+              hint: '1,000.00',
+              suffix: 'MXN',
+              helper: 'El monto base o el total, según el modo.',
+              errorText: _amountError,
+              keyboardType: const TextInputType.numberWithOptions(
+                decimal: true,
               ),
-              AppChoiceOption(
-                value: IvaMode.breakdown,
-                label: 'Desglosar IVA',
-                description: 'Quita el IVA de un total.',
-              ),
-            ],
-            helper: 'Elige si el monto ya incluye IVA.',
-            onChanged: (value) {
-              setState(() {
-                _mode = value;
-                _formError = null;
-              });
-            },
-          ),
-          const SizedBox(height: AppSpacing.xl),
-          AppChoiceField<IvaRate>(
-            label: 'Tasa',
-            value: _rate,
-            options: const [
-              AppChoiceOption(
-                value: IvaRate.general,
-                label: '16%',
-                description: 'Tasa general.',
-              ),
-              AppChoiceOption(
-                value: IvaRate.zero,
-                label: '0%',
-                description: 'Acto gravado con tasa cero.',
-              ),
-              AppChoiceOption(
-                value: IvaRate.exempt,
-                label: 'Exento',
-                description: 'La operación no causa IVA.',
-              ),
-            ],
-            helper: 'La tasa 0% y exento no son lo mismo.',
-            onChanged: (value) {
-              setState(() {
-                _rate = value;
-                _formError = null;
-              });
-            },
-          ),
-          if (_formError != null) ...[
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]')),
+              ],
+              onChanged: (_) {
+                if (_amountError != null) {
+                  setState(() => _amountError = null);
+                }
+              },
+            ),
             const SizedBox(height: AppSpacing.xl),
-            AppFormError(_formError!),
+            AppChoiceField<IvaMode>(
+              label: 'Modo',
+              value: _mode,
+              options: const [
+                AppChoiceOption(
+                  value: IvaMode.add,
+                  label: 'Agregar IVA',
+                  description: 'Suma el IVA al monto.',
+                ),
+                AppChoiceOption(
+                  value: IvaMode.breakdown,
+                  label: 'Desglosar IVA',
+                  description: 'Quita el IVA de un total.',
+                ),
+              ],
+              helper: 'Elige si el monto ya incluye IVA.',
+              onChanged: (value) {
+                setState(() {
+                  _mode = value;
+                  _formError = null;
+                });
+              },
+            ),
+            const SizedBox(height: AppSpacing.xl),
+            AppChoiceField<IvaRate>(
+              label: 'Tasa',
+              value: _rate,
+              options: const [
+                AppChoiceOption(
+                  value: IvaRate.general,
+                  label: '16%',
+                  description: 'Tasa general.',
+                ),
+                AppChoiceOption(
+                  value: IvaRate.zero,
+                  label: '0%',
+                  description: 'Acto gravado con tasa cero.',
+                ),
+                AppChoiceOption(
+                  value: IvaRate.exempt,
+                  label: 'Exento',
+                  description: 'La operación no causa IVA.',
+                ),
+              ],
+              helper: 'La tasa 0% y exento no son lo mismo.',
+              onChanged: (value) {
+                setState(() {
+                  _rate = value;
+                  _formError = null;
+                });
+              },
+            ),
+            if (_formError != null) ...[
+              const SizedBox(height: AppSpacing.xl),
+              AppFormError(_formError!),
+            ],
           ],
-        ],
         ),
       ),
       bottomNavigationBar: SafeArea(

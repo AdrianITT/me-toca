@@ -212,92 +212,94 @@ class _VacacionesScreenState extends ConsumerState<VacacionesScreen> {
       appBar: AppBar(title: const Text('Vacaciones')),
       body: FocusTraversalGroup(
         child: ListView(
-        padding: AppSpacing.screen.copyWith(
-          top: AppSpacing.sm,
-          bottom: AppSpacing.xxl,
-        ),
-        children: [
-          Text(
-            'Datos de tus vacaciones',
-            style: textTheme.headlineMedium?.copyWith(color: palette.ink),
+          padding: AppSpacing.screen.copyWith(
+            top: AppSpacing.sm,
+            bottom: AppSpacing.xxl,
           ),
-          const SizedBox(height: AppSpacing.sm),
-          Text(
-            'Días que te tocan, pago y prima vacacional.',
-            style: textTheme.bodyMedium?.copyWith(color: palette.inkMuted),
-          ),
-          const SizedBox(height: AppSpacing.xxl),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: TextButton.icon(
-              onPressed: _fillExample,
-              icon: const Icon(Icons.play_arrow_rounded, size: 18),
-              label: const Text('Probar con ejemplo'),
-              style: TextButton.styleFrom(
-                foregroundColor: palette.inkMuted,
-                padding: EdgeInsets.zero,
-                minimumSize: const Size(
-                  AppSpacing.minTouchTarget,
-                  AppSpacing.minTouchTarget,
+          children: [
+            Text(
+              'Datos de tus vacaciones',
+              style: textTheme.headlineMedium?.copyWith(color: palette.ink),
+            ),
+            const SizedBox(height: AppSpacing.sm),
+            Text(
+              'Días que te tocan, pago y prima vacacional.',
+              style: textTheme.bodyMedium?.copyWith(color: palette.inkMuted),
+            ),
+            const SizedBox(height: AppSpacing.xxl),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: TextButton.icon(
+                onPressed: _fillExample,
+                icon: const Icon(Icons.play_arrow_rounded, size: 18),
+                label: const Text('Probar con ejemplo'),
+                style: TextButton.styleFrom(
+                  foregroundColor: palette.inkMuted,
+                  padding: EdgeInsets.zero,
+                  minimumSize: const Size(
+                    AppSpacing.minTouchTarget,
+                    AppSpacing.minTouchTarget,
+                  ),
                 ),
               ),
             ),
-          ),
-          const SizedBox(height: AppSpacing.md),
-          AppTextField(
-            label: 'Salario mensual bruto',
-            controller: _salaryController,
-            focusNode: _salaryFocus,
-            hint: '15,000.00',
-            suffix: 'MXN',
-            helper: 'Antes de impuestos.',
-            errorText: _salaryError,
-            keyboardType: const TextInputType.numberWithOptions(decimal: true),
-            inputFormatters: [
-              FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]')),
-            ],
-            textInputAction: TextInputAction.next,
-            onChanged: (_) {
-              if (_salaryError != null) {
-                setState(() => _salaryError = null);
-              }
-            },
-          ),
-          const SizedBox(height: AppSpacing.xl),
-          AppDateField(
-            label: 'Fecha de ingreso',
-            value: _hireDate,
-            onTap: _pickHireDate,
-            helper: 'El día que empezaste a trabajar.',
-            errorText: _hireError,
-          ),
-          const SizedBox(height: AppSpacing.xl),
-          AppDateField(
-            label: 'Fecha de corte',
-            value: _cutoffDate,
-            onTap: _pickCutoffDate,
-            helper: 'Hoy o el día que quieres calcular.',
-          ),
-          const SizedBox(height: AppSpacing.xl),
-          AppTextField(
-            label: 'Días de vacaciones tomados',
-            controller: _takenDaysController,
-            suffix: 'días',
-            helper: 'Deja 0 si no has tomado vacaciones.',
-            errorText: _takenDaysError,
-            keyboardType: TextInputType.number,
-            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-            onChanged: (_) {
-              if (_takenDaysError != null) {
-                setState(() => _takenDaysError = null);
-              }
-            },
-          ),
-          if (_formError != null) ...[
+            const SizedBox(height: AppSpacing.md),
+            AppTextField(
+              label: 'Salario mensual bruto',
+              controller: _salaryController,
+              focusNode: _salaryFocus,
+              hint: '15,000.00',
+              suffix: 'MXN',
+              helper: 'Antes de impuestos.',
+              errorText: _salaryError,
+              keyboardType: const TextInputType.numberWithOptions(
+                decimal: true,
+              ),
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]')),
+              ],
+              textInputAction: TextInputAction.next,
+              onChanged: (_) {
+                if (_salaryError != null) {
+                  setState(() => _salaryError = null);
+                }
+              },
+            ),
             const SizedBox(height: AppSpacing.xl),
-            AppFormError(_formError!),
+            AppDateField(
+              label: 'Fecha de ingreso',
+              value: _hireDate,
+              onTap: _pickHireDate,
+              helper: 'El día que empezaste a trabajar.',
+              errorText: _hireError,
+            ),
+            const SizedBox(height: AppSpacing.xl),
+            AppDateField(
+              label: 'Fecha de corte',
+              value: _cutoffDate,
+              onTap: _pickCutoffDate,
+              helper: 'Hoy o el día que quieres calcular.',
+            ),
+            const SizedBox(height: AppSpacing.xl),
+            AppTextField(
+              label: 'Días de vacaciones tomados',
+              controller: _takenDaysController,
+              suffix: 'días',
+              helper: 'Deja 0 si no has tomado vacaciones.',
+              errorText: _takenDaysError,
+              keyboardType: TextInputType.number,
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              onChanged: (_) {
+                if (_takenDaysError != null) {
+                  setState(() => _takenDaysError = null);
+                }
+              },
+            ),
+            if (_formError != null) ...[
+              const SizedBox(height: AppSpacing.xl),
+              AppFormError(_formError!),
+            ],
           ],
-        ],
         ),
       ),
       bottomNavigationBar: SafeArea(
