@@ -32,6 +32,29 @@ class _IsrScreenState extends ConsumerState<IsrScreen> {
   String? _formError;
 
   @override
+  void initState() {
+    super.initState();
+    final pending = ref.read(pendingHistoryInputsProvider);
+    if (pending != null && pending.type == 'ISR') {
+      final i = pending.inputs;
+      final incomeCents = i['income'];
+      if (incomeCents is int) {
+        _incomeController.text = formatMoney(Money(incomeCents));
+      }
+      final period = i['period'];
+      if (period is String) {
+        final match = PayPeriod.values
+            .where((value) => value.name == period)
+            .firstOrNull;
+        if (match != null) {
+          _period = match;
+        }
+      }
+      ref.read(pendingHistoryInputsProvider.notifier).clear();
+    }
+  }
+
+  @override
   void dispose() {
     _incomeController.dispose();
     _incomeFocus.dispose();
@@ -96,6 +119,7 @@ class _IsrScreenState extends ConsumerState<IsrScreen> {
             inputSummary: 'Ingreso ${formatMoney(income)} · ${_period.label}',
             amount: outcome.valueOrNull!.isrWithheld,
             paramsId: outcome.valueOrNull!.parametersId,
+            inputs: {'income': income.cents, 'period': _period.name},
           ),
         );
     context.push('/isr/resultado');

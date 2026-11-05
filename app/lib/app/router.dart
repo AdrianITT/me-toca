@@ -99,6 +99,24 @@ GoRouter createAppRouter() {
               onDelete: (id) => ref
                   .read(storageControllerProvider.notifier)
                   .removeHistory(id),
+              onOpen: (entry) {
+                final inputs = entry.inputs;
+                if (inputs == null) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Este cálculo no se puede reabrir.'),
+                    ),
+                  );
+                  return;
+                }
+                ref
+                    .read(pendingHistoryInputsProvider.notifier)
+                    .set(entry.type, inputs);
+                final route = _routeForHistoryType(entry.type);
+                if (route != null) {
+                  context.push(route);
+                }
+              },
             );
           },
         ),
@@ -133,6 +151,15 @@ GoRouter createAppRouter() {
     ],
   );
 }
+
+String? _routeForHistoryType(String type) => switch (type) {
+  'Aguinaldo' => '/aguinaldo',
+  'Finiquito' => '/finiquito',
+  'Vacaciones' => '/vacaciones',
+  'ISR' => '/isr',
+  'IVA' => '/iva',
+  _ => null,
+};
 
 /// 200ms fade plus an 8px rise. No bounce.
 Page<void> _page(GoRouterState state, Widget child) {

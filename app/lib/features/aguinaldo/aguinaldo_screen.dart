@@ -42,6 +42,28 @@ class _AguinaldoScreenState extends ConsumerState<AguinaldoScreen> {
   void initState() {
     super.initState();
     _calculationDate = dateOnly(DateTime.now());
+
+    final pending = ref.read(pendingHistoryInputsProvider);
+    if (pending != null && pending.type == 'Aguinaldo') {
+      final i = pending.inputs;
+      final salaryCents = i['salary'];
+      if (salaryCents is int) {
+        _salaryController.text = formatMoney(Money(salaryCents));
+      }
+      final hire = i['hire'];
+      if (hire is String) {
+        _hireDate = dateOnly(DateTime.parse(hire));
+      }
+      final calc = i['calc'];
+      if (calc is String) {
+        _calculationDate = dateOnly(DateTime.parse(calc));
+      }
+      final days = i['days'];
+      if (days is int) {
+        _daysController.text = days.toString();
+      }
+      ref.read(pendingHistoryInputsProvider.notifier).clear();
+    }
   }
 
   @override
@@ -163,8 +185,8 @@ class _AguinaldoScreenState extends ConsumerState<AguinaldoScreen> {
     }
 
     final result = outcome.valueOrNull!;
-    ref.read(calcResultProvider.notifier).update(aguinaldoResultView(result));
     final hireDate = _hireDate!;
+    ref.read(calcResultProvider.notifier).update(aguinaldoResultView(result));
     ref
         .read(storageControllerProvider.notifier)
         .addHistory(
@@ -177,6 +199,12 @@ class _AguinaldoScreenState extends ConsumerState<AguinaldoScreen> {
                 '${formatShortDate(hireDate)} → ${formatShortDate(_calculationDate)}',
             amount: result.aguinaldo,
             paramsId: result.parametersId,
+            inputs: {
+              'salary': salary.cents,
+              'hire': hireDate.toUtc().toIso8601String(),
+              'calc': _calculationDate.toUtc().toIso8601String(),
+              'days': days,
+            },
           ),
         );
     context.push('/aguinaldo/resultado');

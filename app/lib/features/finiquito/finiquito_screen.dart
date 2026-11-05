@@ -47,6 +47,42 @@ class _FiniquitoScreenState extends ConsumerState<FiniquitoScreen> {
   void initState() {
     super.initState();
     _terminationDate = dateOnly(DateTime.now());
+
+    final pending = ref.read(pendingHistoryInputsProvider);
+    if (pending != null && pending.type == 'Finiquito') {
+      final i = pending.inputs;
+      final salaryCents = i['salary'];
+      if (salaryCents is int) {
+        _salaryController.text = formatMoney(Money(salaryCents));
+      }
+      final hire = i['hire'];
+      if (hire is String) {
+        _hireDate = dateOnly(DateTime.parse(hire));
+      }
+      final termination = i['termination'];
+      if (termination is String) {
+        _terminationDate = dateOnly(DateTime.parse(termination));
+      }
+      final separation = i['separation'];
+      if (separation is String) {
+        final match = SeparationType.values
+            .where((value) => value.name == separation)
+            .firstOrNull;
+        if (match != null) {
+          _separationType = match;
+        }
+      }
+      final taken = i['taken'];
+      if (taken is int) {
+        _takenDaysController.text = taken.toString();
+      }
+      final pendingSalaries = i['pending'];
+      if (pendingSalaries is int) {
+        _pendingSalariesController.text = formatMoney(Money(pendingSalaries));
+        _advancedOpen = pendingSalaries > 0;
+      }
+      ref.read(pendingHistoryInputsProvider.notifier).clear();
+    }
   }
 
   @override
@@ -204,6 +240,14 @@ class _FiniquitoScreenState extends ConsumerState<FiniquitoScreen> {
                 '${_separationType.label}',
             amount: result.total,
             paramsId: result.parametersId,
+            inputs: {
+              'salary': salary.cents,
+              'hire': hireDate.toUtc().toIso8601String(),
+              'termination': _terminationDate.toUtc().toIso8601String(),
+              'separation': _separationType.name,
+              'taken': takenDays,
+              'pending': pendingSalaries.cents,
+            },
           ),
         );
     context.push('/finiquito/resultado');

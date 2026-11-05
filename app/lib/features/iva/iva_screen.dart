@@ -33,6 +33,38 @@ class _IvaScreenState extends ConsumerState<IvaScreen> {
   String? _formError;
 
   @override
+  void initState() {
+    super.initState();
+    final pending = ref.read(pendingHistoryInputsProvider);
+    if (pending != null && pending.type == 'IVA') {
+      final i = pending.inputs;
+      final amountCents = i['amount'];
+      if (amountCents is int) {
+        _amountController.text = formatMoney(Money(amountCents));
+      }
+      final mode = i['mode'];
+      if (mode is String) {
+        final match = IvaMode.values
+            .where((value) => value.name == mode)
+            .firstOrNull;
+        if (match != null) {
+          _mode = match;
+        }
+      }
+      final rate = i['rate'];
+      if (rate is String) {
+        final match = IvaRate.values
+            .where((value) => value.name == rate)
+            .firstOrNull;
+        if (match != null) {
+          _rate = match;
+        }
+      }
+      ref.read(pendingHistoryInputsProvider.notifier).clear();
+    }
+  }
+
+  @override
   void dispose() {
     _amountController.dispose();
     _amountFocus.dispose();
@@ -93,6 +125,11 @@ class _IvaScreenState extends ConsumerState<IvaScreen> {
                 'Monto ${formatMoney(amount)} · ${_mode.label} · ${_rate.label}',
             amount: outcome.valueOrNull!.total,
             paramsId: null,
+            inputs: {
+              'amount': amount.cents,
+              'mode': _mode.name,
+              'rate': _rate.name,
+            },
           ),
         );
     context.push('/iva/resultado');

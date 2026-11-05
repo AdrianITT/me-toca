@@ -14,6 +14,7 @@ class HistoryEntry {
     required this.inputSummary,
     required this.amount,
     this.paramsId,
+    this.inputs,
   });
 
   /// Calculator id, for example `aguinaldo`.
@@ -29,6 +30,10 @@ class HistoryEntry {
   /// Validity id of the parameter set used; null for IVA.
   final String? paramsId;
 
+  /// Serialized inputs so the calculation can be reopened from history.
+  /// Absent in older records; reopening then just opens the calculator.
+  final Map<String, dynamic>? inputs;
+
   Map<String, dynamic> toJson() => {
     'id': id,
     'type': type,
@@ -36,6 +41,7 @@ class HistoryEntry {
     'inputSummary': inputSummary,
     'amount': amount.cents,
     'paramsId': paramsId,
+    if (inputs != null) 'inputs': inputs,
   };
 
   /// Lenient parser: malformed records return null and are skipped.
@@ -57,6 +63,10 @@ class HistoryEntry {
       return null;
     }
     final paramsId = json['paramsId'];
+    final rawInputs = json['inputs'];
+    final inputs = rawInputs is Map<String, dynamic>
+        ? rawInputs
+        : (rawInputs is Map ? Map<String, dynamic>.from(rawInputs) : null);
     return HistoryEntry(
       id: id,
       type: type,
@@ -64,6 +74,7 @@ class HistoryEntry {
       inputSummary: inputSummary,
       amount: Money(amount),
       paramsId: paramsId is String ? paramsId : null,
+      inputs: inputs,
     );
   }
 
@@ -75,11 +86,12 @@ class HistoryEntry {
       other.date == date &&
       other.inputSummary == inputSummary &&
       other.amount == amount &&
-      other.paramsId == paramsId;
+      other.paramsId == paramsId &&
+      _mapEquals(other.inputs, inputs);
 
   @override
   int get hashCode =>
-      Object.hash(id, type, date, inputSummary, amount, paramsId);
+      Object.hash(id, type, date, inputSummary, amount, paramsId, inputs);
 
   @override
   String toString() => 'HistoryEntry($id, ${amount.cents}, $date)';
@@ -135,4 +147,19 @@ class HistoryStore {
 
   static List<HistoryEntry> removeById(List<HistoryEntry> current, String id) =>
       current.where((entry) => entry.id != id).toList(growable: false);
+}
+
+bool _mapEquals(Map<String, dynamic>? a, Map<String, dynamic>? b) {
+  if (a == null || b == null) {
+    return a == b;
+  }
+  if (a.length != b.length) {
+    return false;
+  }
+  for (final key in a.keys) {
+    if (!b.containsKey(key) || b[key] != a[key]) {
+      return false;
+    }
+  }
+  return true;
 }

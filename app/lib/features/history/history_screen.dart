@@ -18,11 +18,13 @@ class HistoryScreen extends StatelessWidget {
     required this.entries,
     required this.isPro,
     this.onDelete,
+    this.onOpen,
   });
 
   final List<HistoryEntry> entries;
   final bool isPro;
   final ValueChanged<String>? onDelete;
+  final ValueChanged<HistoryEntry>? onOpen;
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +65,11 @@ class HistoryScreen extends StatelessWidget {
                   SectionLabel(_monthLabel(group.key)),
                   const SizedBox(height: AppSpacing.md),
                   for (final entry in group.value) ...[
-                    _HistoryRow(entry: entry, onDelete: onDelete),
+                    _HistoryRow(
+                      entry: entry,
+                      onDelete: onDelete,
+                      onOpen: onOpen,
+                    ),
                     const SizedBox(height: AppSpacing.sm),
                   ],
                   const SizedBox(height: AppSpacing.lg),
@@ -114,10 +120,15 @@ String _monthLabel(DateTime month) {
 }
 
 class _HistoryRow extends StatelessWidget {
-  const _HistoryRow({required this.entry, this.onDelete});
+  const _HistoryRow({
+    required this.entry,
+    this.onDelete,
+    this.onOpen,
+  });
 
   final HistoryEntry entry;
   final ValueChanged<String>? onDelete;
+  final ValueChanged<HistoryEntry>? onOpen;
 
   @override
   Widget build(BuildContext context) {
@@ -141,6 +152,7 @@ class _HistoryRow extends StatelessWidget {
         child: Icon(Icons.delete_outline_rounded, color: palette.surface),
       ),
       child: AppCard(
+        onTap: onOpen == null ? null : () => onOpen!(entry),
         padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

@@ -121,3 +121,22 @@ final storageControllerProvider =
       StorageController,
       ({AppSettings settings, List<HistoryEntry> history})
     >(StorageController.new);
+
+/// Holds inputs captured from a history row so the matching calculator can
+/// reopen them. Consumed (and cleared) by that calculator's screen.
+class PendingHistoryInputs
+    extends Notifier<({String type, Map<String, dynamic> inputs})?> {
+  @override
+  ({String type, Map<String, dynamic> inputs})? build() => null;
+
+  void set(String type, Map<String, dynamic> inputs) =>
+      state = (type: type, inputs: inputs);
+
+  void clear() => state = null;
+}
+
+final pendingHistoryInputsProvider =
+    NotifierProvider<
+      PendingHistoryInputs,
+      ({String type, Map<String, dynamic> inputs})?
+    >(PendingHistoryInputs.new);

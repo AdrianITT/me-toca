@@ -41,6 +41,28 @@ class _VacacionesScreenState extends ConsumerState<VacacionesScreen> {
   void initState() {
     super.initState();
     _cutoffDate = dateOnly(DateTime.now());
+
+    final pending = ref.read(pendingHistoryInputsProvider);
+    if (pending != null && pending.type == 'Vacaciones') {
+      final i = pending.inputs;
+      final salaryCents = i['salary'];
+      if (salaryCents is int) {
+        _salaryController.text = formatMoney(Money(salaryCents));
+      }
+      final hire = i['hire'];
+      if (hire is String) {
+        _hireDate = dateOnly(DateTime.parse(hire));
+      }
+      final cutoff = i['cutoff'];
+      if (cutoff is String) {
+        _cutoffDate = dateOnly(DateTime.parse(cutoff));
+      }
+      final taken = i['taken'];
+      if (taken is int) {
+        _takenDaysController.text = taken.toString();
+      }
+      ref.read(pendingHistoryInputsProvider.notifier).clear();
+    }
   }
 
   @override
@@ -154,6 +176,7 @@ class _VacacionesScreenState extends ConsumerState<VacacionesScreen> {
       return;
     }
 
+    final hireDate = _hireDate!;
     ref
         .read(calcResultProvider.notifier)
         .update(vacacionesResultView(outcome.valueOrNull!));
@@ -166,9 +189,15 @@ class _VacacionesScreenState extends ConsumerState<VacacionesScreen> {
             date: _cutoffDate,
             inputSummary:
                 'Salario ${formatMoney(salary)} · '
-                '${formatShortDate(_hireDate!)} → ${formatShortDate(_cutoffDate)}',
+                '${formatShortDate(hireDate)} → ${formatShortDate(_cutoffDate)}',
             amount: outcome.valueOrNull!.total,
             paramsId: outcome.valueOrNull!.parametersId,
+            inputs: {
+              'salary': salary.cents,
+              'hire': hireDate.toUtc().toIso8601String(),
+              'cutoff': _cutoffDate.toUtc().toIso8601String(),
+              'taken': takenDays,
+            },
           ),
         );
     context.push('/vacaciones/resultado');
