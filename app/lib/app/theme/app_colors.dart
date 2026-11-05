@@ -11,8 +11,8 @@ abstract final class AppColors {
   static const lightInkMuted = Color(0xFF5C6B62);
   static const lightPrimary = Color(0xFF2F6B4F);
   static const lightPrimarySoft = Color(0xFFDCEBE2);
-  static const lightAccent = Color(0xFFE98A5C);
-  static const lightAccentSoft = Color(0xFFFCE7DA);
+  static const lightAccent = Color(0xFFAE552C);
+  static const lightAccentSoft = Color(0xFFF2D9C8);
   static const lightBorder = Color(0xFFE8E0D3);
   static const lightSuccess = Color(0xFF2F7D5B);
   static const lightWarning = Color(0xFFB87333);

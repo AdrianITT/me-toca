@@ -132,7 +132,8 @@ class _IsrScreenState extends ConsumerState<IsrScreen> {
 
     return Scaffold(
       appBar: AppBar(title: const Text('ISR')),
-      body: ListView(
+      body: FocusTraversalGroup(
+        child: ListView(
         padding: AppSpacing.screen.copyWith(
           top: AppSpacing.sm,
           bottom: AppSpacing.xxl,
@@ -217,6 +218,7 @@ class _IsrScreenState extends ConsumerState<IsrScreen> {
             AppFormError(_formError!),
           ],
         ],
+        ),
       ),
       bottomNavigationBar: SafeArea(
         top: false,

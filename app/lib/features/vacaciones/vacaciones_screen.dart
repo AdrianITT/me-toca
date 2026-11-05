@@ -210,7 +210,8 @@ class _VacacionesScreenState extends ConsumerState<VacacionesScreen> {
 
     return Scaffold(
       appBar: AppBar(title: const Text('Vacaciones')),
-      body: ListView(
+      body: FocusTraversalGroup(
+        child: ListView(
         padding: AppSpacing.screen.copyWith(
           top: AppSpacing.sm,
           bottom: AppSpacing.xxl,
@@ -297,6 +298,7 @@ class _VacacionesScreenState extends ConsumerState<VacacionesScreen> {
             AppFormError(_formError!),
           ],
         ],
+        ),
       ),
       bottomNavigationBar: SafeArea(
         top: false,

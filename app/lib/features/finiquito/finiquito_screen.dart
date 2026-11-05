@@ -260,7 +260,8 @@ class _FiniquitoScreenState extends ConsumerState<FiniquitoScreen> {
 
     return Scaffold(
       appBar: AppBar(title: const Text('Finiquito')),
-      body: ListView(
+      body: FocusTraversalGroup(
+        child: ListView(
         padding: AppSpacing.screen.copyWith(
           top: AppSpacing.sm,
           bottom: AppSpacing.xxl,
@@ -412,6 +413,7 @@ class _FiniquitoScreenState extends ConsumerState<FiniquitoScreen> {
             AppFormError(_formError!),
           ],
         ],
+        ),
       ),
       bottomNavigationBar: SafeArea(
         top: false,

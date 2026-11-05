@@ -217,7 +217,8 @@ class _AguinaldoScreenState extends ConsumerState<AguinaldoScreen> {
 
     return Scaffold(
       appBar: AppBar(title: const Text('Aguinaldo')),
-      body: ListView(
+      body: FocusTraversalGroup(
+        child: ListView(
         padding: AppSpacing.screen.copyWith(
           top: AppSpacing.sm,
           bottom: AppSpacing.xxl,
@@ -333,6 +334,7 @@ class _AguinaldoScreenState extends ConsumerState<AguinaldoScreen> {
             AppFormError(_formError!),
           ],
         ],
+        ),
       ),
       bottomNavigationBar: SafeArea(
         top: false,

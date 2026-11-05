@@ -142,7 +142,8 @@ class _IvaScreenState extends ConsumerState<IvaScreen> {
 
     return Scaffold(
       appBar: AppBar(title: const Text('IVA')),
-      body: ListView(
+      body: FocusTraversalGroup(
+        child: ListView(
         padding: AppSpacing.screen.copyWith(
           top: AppSpacing.sm,
           bottom: AppSpacing.xxl,
@@ -251,6 +252,7 @@ class _IvaScreenState extends ConsumerState<IvaScreen> {
             AppFormError(_formError!),
           ],
         ],
+        ),
       ),
       bottomNavigationBar: SafeArea(
         top: false,
