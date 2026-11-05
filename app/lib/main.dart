@@ -132,10 +132,21 @@ class _SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final brightness =
+        WidgetsBinding.instance.platformDispatcher.platformBrightness;
+    final isDark = brightness == Brightness.dark;
+
+    final canvas = isDark ? AppColors.darkCanvas : AppColors.lightCanvas;
+    final primarySoft =
+        isDark ? AppColors.darkPrimarySoft : AppColors.lightPrimarySoft;
+    final primary = isDark ? AppColors.darkPrimary : AppColors.lightPrimary;
+    final inkMuted = isDark ? AppColors.darkInkMuted : AppColors.lightInkMuted;
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: isDark ? AppTheme.dark() : AppTheme.light(),
       home: Scaffold(
-        backgroundColor: AppColors.lightCanvas,
+        backgroundColor: canvas,
         body: Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -144,20 +155,20 @@ class _SplashScreen extends StatelessWidget {
                 width: 96,
                 height: 96,
                 decoration: BoxDecoration(
-                  color: AppColors.lightPrimarySoft,
+                  color: primarySoft,
                   borderRadius: BorderRadius.circular(32),
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.card_giftcard_rounded,
                   size: 44,
-                  color: AppColors.lightPrimary,
+                  color: primary,
                 ),
               ),
               const SizedBox(height: AppSpacing.xxl),
               Text(
                 'ME TOCA',
                 style: AppTypography.textTheme.labelMedium?.copyWith(
-                  color: AppColors.lightPrimary,
+                  color: primary,
                   letterSpacing: 2.4,
                 ),
               ),
@@ -165,7 +176,7 @@ class _SplashScreen extends StatelessWidget {
               Text(
                 'Lo que te toca, claro y sin jerga',
                 style: AppTypography.textTheme.bodyMedium?.copyWith(
-                  color: AppColors.lightInkMuted,
+                  color: inkMuted,
                 ),
               ),
             ],
